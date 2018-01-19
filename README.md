@@ -153,6 +153,14 @@ export default class App extends Component {
 }
 ```
 
+In your App.css add: 
+
+```
+body {
+    background: lightblue;
+}
+```
+
 In your index.js: 
 
 ```
