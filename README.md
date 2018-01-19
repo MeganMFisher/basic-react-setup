@@ -37,8 +37,16 @@ The loaders are transformations that are applied on a file in our app. At a high
 
 ```
 const path = require('path');
+
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
+  template: './public/index.html',
+  filename: 'index.html',
+  inject: 'body'
+})
+
 module.exports = {
-  entry: './public/index.js',
+  entry: './src/index.js',
   output: {
     path: path.resolve('dist'),
     filename: 'index_bundle.js'
@@ -48,24 +56,38 @@ module.exports = {
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
       { test:/\.css$/, use:['style-loader','css-loader']}
     ]
-  }
+  },
+  plugins: [HtmlWebpackPluginConfig]
 }
+
+
 ```
 
 
-
+Install the following:
 
 
 ```
 yarn add babel-loader css-loader  style-loade babel-core babel-preset-es2015 babel-preset-react --dev
 ```
 
+Add a .babelrc file: 
 
 ```
 touch .babelrc
 ```
 
+Add into your .babelrc file the following: 
 
+```
+{
+    "presets":[
+        "es2015", "react"
+    ]
+}
+```
+
+Create public and src folders. Inside the public folder add an index.html file. Inside the src folder add a index.js file.
 
 ```
 mkdir public
@@ -74,17 +96,77 @@ touch index.js
 touch index.html
 ```
 
-```
-yarn add html-webpack-plugin
-```
+Add the following to your index.html file: 
 
 ```
-yarn add react react-dom
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>React App Setup</title>
+  </head>
+  <body>
+    <div id="root">
+
+    </div>
+  </body>
+</html>
 ```
+
+Install the following: 
+
+```
+yarn add html-webpack-plugin react react-dom
+```
+
+In your package.json add: 
+
+```
+  "scripts": {
+    "start": "webpack-dev-server"
+  },
+```
+
+Then create a component: 
 
 ```
 cd src
 mkdir components 
 cd components
 touch App.js
+```
+
+In your App.js add: 
+
+```
+import React, {Component} from 'react';
+import './App.css';
+
+export default class App extends Component {
+  render() {
+    return (
+     <div>
+        <h1>Testing</h1>
+      </div>
+    );
+  }
+}
+```
+
+In your index.js: 
+
+```
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './components/App.js';
+
+ReactDOM.render(
+    <App />, 
+document.getElementById('root'));
+```
+
+All done go ahead and test it out!
+
+```
+yarn start
 ```

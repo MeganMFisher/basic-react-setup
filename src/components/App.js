@@ -4,8 +4,9 @@ import './App.css';
 export default class App extends Component {
   render() {
     return (
-     <div style={{textAlign: 'center'}}>
-        <h1>Hello World</h1>
-      </div>);
+     <div>
+        <h1>Testing</h1>
+      </div>
+    );
   }
 }
